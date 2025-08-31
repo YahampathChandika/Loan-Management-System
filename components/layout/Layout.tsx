@@ -8,7 +8,7 @@ export function Layout({ children }: LayoutProps) {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <main className="container mx-auto px-6 py-6">{children}</main>
+      <main className="container mx-auto px-6 py-6 mt-16 md:mt-20">{children}</main>
     </div>
   );
 }
