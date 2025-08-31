@@ -82,7 +82,7 @@ export function BorrowerPipeline() {
     if (searchTerm.trim()) {
       return (
         <div className="text-center text-muted-foreground py-8 space-y-2">
-          <p>No borrowers found for "{searchTerm}"</p>
+          <p>No borrowers found for &ldquo;{searchTerm}&ldquo;</p>
           <p className="text-xs">Try adjusting your search terms</p>
         </div>
       );
@@ -101,7 +101,7 @@ export function BorrowerPipeline() {
         <CardTitle>Borrower Pipeline</CardTitle>
         {searchTerm && (
           <p className="text-sm text-muted-foreground">
-            Searching for: "{searchTerm}"
+            Searching for: &ldquo;{searchTerm}&ldquo;
           </p>
         )}
       </CardHeader>
