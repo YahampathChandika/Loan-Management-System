@@ -3,10 +3,10 @@ import { mockBrokerInfo } from "@/data/mock-data";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = params;
+    const { id } = await context.params;
 
     // Simulate API delay
     await new Promise((resolve) => setTimeout(resolve, 100));
