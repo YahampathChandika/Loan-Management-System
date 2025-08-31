@@ -16,6 +16,7 @@ export function BorrowerCard({
 }: BorrowerCardProps) {
   return (
     <Card
+      data-testid={`borrower-card-${borrower.id}`}
       className={`p-4 cursor-pointer transition-all hover:shadow-md ${
         isActive ? "ring-2 ring-primary bg-accent" : "hover:bg-accent/50"
       }`}

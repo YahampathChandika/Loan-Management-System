@@ -15,6 +15,8 @@ interface BorrowerStore {
   workflowSteps: string[];
   isLoading: boolean;
   error: string | null;
+  searchTerm: string;
+  isActive: boolean; // for radio group filter
 
   // Actions
   setPipeline: (pipeline: BorrowerPipeline) => void;
@@ -24,12 +26,11 @@ interface BorrowerStore {
   setWorkflowSteps: (steps: string[]) => void;
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
-
-  // Computed
-  getActiveTabBorrowers: () => any[];
+  setSearchTerm: (term: string) => void;
+  setIsActive: (active: boolean) => void;
 }
 
-export const useBorrowerStore = create<BorrowerStore>((set, get) => ({
+export const useBorrowerStore = create<BorrowerStore>((set) => ({
   // Initial state
   pipeline: null,
   activeBorrower: null,
@@ -38,36 +39,17 @@ export const useBorrowerStore = create<BorrowerStore>((set, get) => ({
   workflowSteps: [],
   isLoading: false,
   error: null,
+  searchTerm: "",
+  isActive: true,
 
   // Actions
   setPipeline: (pipeline) => set({ pipeline }),
-
   setActiveBorrower: (borrower) => set({ activeBorrower: borrower }),
-
   setBrokerInfo: (broker) => set({ brokerInfo: broker }),
-
   setActiveTab: (tab) => set({ activeTab: tab }),
-
   setWorkflowSteps: (steps) => set({ workflowSteps: steps }),
-
   setLoading: (loading) => set({ isLoading: loading }),
-
   setError: (error) => set({ error }),
-
-  // Computed values
-  getActiveTabBorrowers: () => {
-    const { pipeline, activeTab } = get();
-    if (!pipeline) return [];
-
-    switch (activeTab) {
-      case "new":
-        return pipeline.new;
-      case "in_review":
-        return pipeline.in_review;
-      case "approved":
-        return pipeline.approved;
-      default:
-        return [];
-    }
-  },
+  setSearchTerm: (term) => set({ searchTerm: term }),
+  setIsActive: (active) => set({ isActive: active }),
 }));

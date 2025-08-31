@@ -5,21 +5,25 @@ import { Label } from "@/components/ui/label";
 import { BorrowerCard } from "./BorrowerCard";
 import { useBorrowerStore } from "@/store/useBorrowerStore";
 import { TabValue } from "@/lib/types";
-import { getTabLabel } from "@/lib/utils";
 import { apiClient } from "@/lib/api";
-import { useState } from "react";
+import {
+  getActiveTabBorrowers,
+  getFilteredBorrowers,
+} from "../../lib/borrower-utils";
+import { useMemo } from "react";
 
 export function BorrowerPipeline() {
   const {
     pipeline,
     activeTab,
     activeBorrower,
+    isActive,
+    searchTerm,
     setActiveTab,
     setActiveBorrower,
     setLoading,
+    setIsActive,
   } = useBorrowerStore();
-
-  const [radioValue, setRadioValue] = useState("active");
 
   const handleTabChange = (value: string) => {
     setActiveTab(value as TabValue);
@@ -37,27 +41,69 @@ export function BorrowerPipeline() {
     }
   };
 
-  const getActiveTabBorrowers = () => {
-    if (!pipeline) return [];
+  const handleRadioChange = (value: string) => {
+    setIsActive(value === "active");
+  };
 
-    switch (activeTab) {
+  // Use useMemo to prevent unnecessary re-calculations
+  const activeTabBorrowers = useMemo(
+    () => getActiveTabBorrowers(pipeline, activeTab),
+    [pipeline, activeTab]
+  );
+
+  const filteredBorrowers = useMemo(
+    () => getFilteredBorrowers(activeTabBorrowers, searchTerm, isActive),
+    [activeTabBorrowers, searchTerm, isActive]
+  );
+
+  const getTabCount = (tabValue: TabValue) => {
+    if (!pipeline) return 0;
+    switch (tabValue) {
       case "new":
-        return pipeline.new;
+        return pipeline.new.length;
       case "in_review":
-        return pipeline.in_review;
+        return pipeline.in_review.length;
       case "approved":
-        return pipeline.approved;
+        return pipeline.approved.length;
       default:
-        return [];
+        return 0;
     }
   };
 
-  const activeBorrowers = getActiveTabBorrowers();
+  const renderEmptyState = () => {
+    if (!isActive) {
+      return (
+        <p className="text-center text-muted-foreground py-8">
+          No inactive borrowers to display
+        </p>
+      );
+    }
+
+    if (searchTerm.trim()) {
+      return (
+        <div className="text-center text-muted-foreground py-8 space-y-2">
+          <p>No borrowers found for "{searchTerm}"</p>
+          <p className="text-xs">Try adjusting your search terms</p>
+        </div>
+      );
+    }
+
+    return (
+      <p className="text-center text-muted-foreground py-8">
+        No borrowers in this category
+      </p>
+    );
+  };
 
   return (
-    <Card className="h-fit">
+    <Card className="h-fit" data-testid="borrower-pipeline">
       <CardHeader>
         <CardTitle>Borrower Pipeline</CardTitle>
+        {searchTerm && (
+          <p className="text-sm text-muted-foreground">
+            Searching for: "{searchTerm}"
+          </p>
+        )}
       </CardHeader>
       <CardContent>
         <Tabs
@@ -66,32 +112,26 @@ export function BorrowerPipeline() {
           className="space-y-4"
         >
           <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="new">
-              New ({pipeline?.new.length || 0})
-            </TabsTrigger>
+            <TabsTrigger value="new">New ({getTabCount("new")})</TabsTrigger>
             <TabsTrigger value="in_review">
-              In Review ({pipeline?.in_review.length || 0})
+              In Review ({getTabCount("in_review")})
             </TabsTrigger>
             <TabsTrigger value="approved">
-              Approved ({pipeline?.approved.length || 0})
+              Approved ({getTabCount("approved")})
             </TabsTrigger>
           </TabsList>
 
           <TabsContent value={activeTab} className="space-y-3">
-            {activeBorrowers.length === 0 ? (
-              <p className="text-center text-muted-foreground py-8">
-                No borrowers in this category
-              </p>
-            ) : (
-              activeBorrowers.map((borrower) => (
-                <BorrowerCard
-                  key={borrower.id}
-                  borrower={borrower}
-                  isActive={activeBorrower?.id === borrower.id}
-                  onClick={() => handleBorrowerClick(borrower.id)}
-                />
-              ))
-            )}
+            {filteredBorrowers.length === 0
+              ? renderEmptyState()
+              : filteredBorrowers.map((borrower) => (
+                  <BorrowerCard
+                    key={borrower.id}
+                    borrower={borrower}
+                    isActive={activeBorrower?.id === borrower.id}
+                    onClick={() => handleBorrowerClick(borrower.id)}
+                  />
+                ))}
           </TabsContent>
         </Tabs>
 
@@ -99,7 +139,10 @@ export function BorrowerPipeline() {
           <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">
             F-SANITISED ACTIVE
           </h4>
-          <RadioGroup value={radioValue} onValueChange={setRadioValue}>
+          <RadioGroup
+            value={isActive ? "active" : "inactive"}
+            onValueChange={handleRadioChange}
+          >
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="active" id="active" />
               <Label htmlFor="active" className="text-sm">

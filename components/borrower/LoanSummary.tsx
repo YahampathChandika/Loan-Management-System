@@ -2,15 +2,20 @@ import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertTriangle } from "lucide-react";
 import { BorrowerDetail } from "@/lib/types";
-import { formatCurrency, formatNumber } from "@/lib/utils";
+import { formatCurrency } from "@/lib/utils";
 import { apiClient } from "@/lib/api";
 import { useState } from "react";
 
 interface LoanSummaryProps {
   borrower: BorrowerDetail;
+  onToast: (
+    type: "success" | "error" | "info",
+    title: string,
+    message?: string
+  ) => void;
 }
 
-export function LoanSummary({ borrower }: LoanSummaryProps) {
+export function LoanSummary({ borrower, onToast }: LoanSummaryProps) {
   const [isEscalating, setIsEscalating] = useState(false);
 
   const handleEscalate = async () => {
@@ -18,11 +23,17 @@ export function LoanSummary({ borrower }: LoanSummaryProps) {
     try {
       const result = await apiClient.escalateToCredit(borrower.id);
       if (result.success) {
-        console.log("Escalated to Credit Committee:", result.message);
-        // You could add a toast notification here
+        onToast("success", "Escalated Successfully", result.message);
+      } else {
+        onToast("error", "Escalation Failed", "Please try again later");
       }
     } catch (error) {
       console.error("Failed to escalate:", error);
+      onToast(
+        "error",
+        "Escalation Failed",
+        "Unable to escalate to Credit Committee. Please try again."
+      );
     } finally {
       setIsEscalating(false);
     }
@@ -35,6 +46,13 @@ export function LoanSummary({ borrower }: LoanSummaryProps) {
     { label: "Credit Score", value: borrower.credit_score.toString() },
     { label: "Source of Funds", value: borrower.source_of_funds },
   ];
+
+  // Calculate debt-to-income ratio
+  const debtToIncomeRatio = (
+    ((borrower.existing_loan + borrower.loan_amount) / borrower.income) *
+    100
+  ).toFixed(1);
+  const isHighDebtRatio = parseFloat(debtToIncomeRatio) > 40;
 
   return (
     <div className="space-y-6">
@@ -50,13 +68,50 @@ export function LoanSummary({ borrower }: LoanSummaryProps) {
             <span className="text-sm text-foreground">{item.value}</span>
           </div>
         ))}
+
+        {/* Additional calculated fields */}
+        <div className="flex justify-between py-2 border-b border-border">
+          <span className="text-sm font-medium text-muted-foreground">
+            Debt-to-Income Ratio
+          </span>
+          <span
+            className={`text-sm font-medium ${
+              isHighDebtRatio ? "text-destructive" : "text-foreground"
+            }`}
+          >
+            {debtToIncomeRatio}%
+          </span>
+        </div>
       </div>
 
+      {/* Risk Signals */}
       {borrower.risk_signal && borrower.risk_signal !== "None" && (
         <Alert variant="destructive">
           <AlertTriangle className="h-4 w-4" />
           <AlertDescription>
             <strong>Risk Signal:</strong> {borrower.risk_signal}
+          </AlertDescription>
+        </Alert>
+      )}
+
+      {/* High debt ratio warning */}
+      {isHighDebtRatio && (
+        <Alert variant="destructive">
+          <AlertTriangle className="h-4 w-4" />
+          <AlertDescription>
+            <strong>High Debt-to-Income Ratio:</strong> {debtToIncomeRatio}%
+            exceeds recommended threshold of 40%
+          </AlertDescription>
+        </Alert>
+      )}
+
+      {/* Credit score assessment */}
+      {borrower.credit_score < 650 && (
+        <Alert variant="destructive">
+          <AlertTriangle className="h-4 w-4" />
+          <AlertDescription>
+            <strong>Low Credit Score:</strong> Score of {borrower.credit_score}{" "}
+            is below preferred minimum of 650
           </AlertDescription>
         </Alert>
       )}
