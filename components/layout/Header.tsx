@@ -68,43 +68,62 @@ export function Header() {
             <h1 className="text-xl sm:text-2xl font-bold">DemoApp</h1>
           </div>
 
-        {/* Mobile Search - Inline Expansion */}
-        <div className={`md:hidden flex items-center ${isSearchOpen ? 'flex-1 ml-4' : 'hidden'}`}>
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <Input
-              placeholder="Search borrowers..."
-              className="pl-10 w-full"
-              value={searchTerm}
-              onChange={(e) => handleSearch(e.target.value)}
-              autoFocus
-            />
-          </div>
-          {/* Close search button - also clears search */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="ml-2"
-            onClick={() => {
-              handleSearch("");
-              setIsSearchOpen(false);
-            }}
+          {/* Mobile Search - Inline Expansion */}
+          <div
+            className={`md:hidden flex items-center ${
+              isSearchOpen ? "flex-1 ml-4" : "hidden"
+            }`}
           >
-            <X className="h-5 w-5" />
-          </Button>
-        </div>
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                placeholder="Search borrowers..."
+                className="pl-10 w-full"
+                value={searchTerm}
+                onChange={(e) => handleSearch(e.target.value)}
+                autoFocus
+              />
+            </div>
+            {/* Close search button - also clears search */}
+            <Button
+              variant="ghost"
+              size="icon"
+              className="ml-2"
+              onClick={() => {
+                handleSearch("");
+                setIsSearchOpen(false);
+              }}
+            >
+              <X className="h-5 w-5" />
+            </Button>
+          </div>
 
           {/* Right side - Actions */}
-          <div className={`flex items-center space-x-2 sm:space-x-4 ${isSearchOpen ? 'hidden md:flex' : ''}`}>
+          <div
+            className={`flex items-center space-x-2 sm:space-x-4 ${
+              isSearchOpen ? "hidden md:flex" : ""
+            }`}
+          >
             {/* Desktop Search - Right aligned with actions */}
             <div className="relative hidden md:block">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
                 placeholder="Search borrowers..."
-                className="pl-10 w-48 lg:w-80"
+                className="pl-10 pr-10 w-48 lg:w-80"
                 value={searchTerm}
                 onChange={(e) => handleSearch(e.target.value)}
               />
+              {/* Clear button inside desktop search input */}
+              {searchTerm && (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7"
+                  onClick={() => handleSearch("")}
+                >
+                  <X className="h-3 w-3" />
+                </Button>
+              )}
             </div>
 
             {/* Mobile Search Toggle */}
@@ -121,11 +140,7 @@ export function Header() {
             <ThemeToggle />
 
             {/* Help Button - Always visible */}
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={handleHelpClick}
-            >
+            <Button variant="ghost" size="icon" onClick={handleHelpClick}>
               <HelpCircle className="h-5 w-5" />
             </Button>
 
@@ -138,7 +153,7 @@ export function Header() {
             >
               <Bell className="h-4 w-4 sm:h-5 sm:w-5" />
               {unreadCount > 0 && (
-                <span className="absolute -top-1 -right-1 h-2 w-2 sm:h-3 sm:w-3 rounded-full bg-red-500 flex items-center justify-center text-xs text-white font-bold min-w-[12px]">
+                <span className="absolute -top-1 -right-1 h-2 w-2 sm:h-3 sm:w-3 p-2 rounded-full bg-red-500 flex items-center justify-center text-xs text-white font-bold min-w-[12px]">
                   {unreadCount}
                 </span>
               )}
