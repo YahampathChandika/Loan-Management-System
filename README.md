@@ -1,36 +1,133 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Loan Management System
 
-## Getting Started
+A modern loan management dashboard for brokers and loan officers, featuring AI-powered risk assessment and responsive design.
 
-First, run the development server:
+[![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC?style=flat-square&logo=tailwind-css)](https://tailwindcss.com/)
 
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18 or higher
+- npm or yarn
+
+### Installation
 ```bash
+git clone https://github.com/YahampathChandika/Loan-Management-System.git
+cd Loan-Management-System
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ✨ Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Borrower Pipeline
+- Three-stage workflow: New, In Review, Approved
+- Real-time search and filtering
+- Responsive card interface
 
-## Learn More
+### AI Risk Assessment
+- Automated flag detection for loan applications
+- Explainable AI recommendations
+- Smart approval workflow
 
-To learn more about Next.js, take a look at the following resources:
+### Broker Dashboard
+- Performance metrics and statistics
+- Onboarding workflow tracking
+- Multi-channel contact options
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### User Experience
+- Dark/Light theme support
+- Responsive design for all devices
+- Toast notifications
+- Professional UI components
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🛠️ Technology Stack
 
-## Deploy on Vercel
+- **Frontend:** React 19, Next.js 15
+- **Styling:** Tailwind CSS, ShadCN UI
+- **State Management:** Zustand
+- **Type Safety:** TypeScript
+- **Testing:** Playwright
+- **Icons:** Lucide React
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📁 Project Structure
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+├── app/                    # Next.js App Router
+│   ├── api/               # API routes
+│   └── dashboard/         # Main dashboard
+├── components/            # React components
+│   ├── borrower/         # Borrower components
+│   ├── broker/           # Broker components
+│   └── ui/               # UI components
+├── lib/                  # Utilities and types
+├── store/                # State management
+└── tests/                # E2E tests
+```
+
+## 🧪 Testing
+
+```bash
+# Install test dependencies
+npx playwright install
+
+# Run tests
+npm run test
+
+# Run tests with UI
+npm run test:ui
+```
+
+## 🔧 API Endpoints
+
+The application includes a complete API layer with the following endpoints:
+
+- `GET /api/borrowers/pipeline` - Get borrower pipeline data
+- `GET /api/borrowers/[id]` - Get borrower details
+- `POST /api/borrowers/[id]/approve` - Approve loan
+- `POST /api/borrowers/[id]/escalate` - Escalate to credit committee
+- `POST /api/borrowers/[id]/request-documents` - Request documents
+- `POST /api/borrowers/[id]/send-valuer` - Send to valuer
+- `GET /api/broker/[id]` - Get broker information
+- `GET /api/onboarding/workflow` - Get workflow steps
+
+## 🎨 Design Features
+
+- Modern, clean interface
+- Consistent spacing and typography
+- Color-coded status indicators
+- Smooth animations and transitions
+- Mobile-first responsive design
+
+## 📝 Usage
+
+1. **View Pipeline:** Browse borrowers across different stages
+2. **Select Borrower:** Click any borrower card to view details
+3. **Review AI Flags:** Expand AI Explainability section for risk assessment
+4. **Take Actions:** Approve loans, request documents, or escalate cases
+5. **Monitor Progress:** Track workflow progress in broker overview
+
+## 🔗 Development
+
+### Build for Production
+```bash
+npm run build
+npm start
+```
+
+### Linting
+```bash
+npm run lint
+```
+
+## 📄 License
+
+This project is developed for demonstration purposes.
+
+## 🤝 Contributing
+
+This is a demonstration project. For suggestions or improvements, feel free to open an issue.
