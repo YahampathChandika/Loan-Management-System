@@ -113,10 +113,11 @@ export function AIExplainability({ borrower, onToast }: AIExplainabilityProps) {
               </div>
             )}
 
-            <div className="flex flex-wrap gap-2 pt-4">
+            <div className="flex flex-wrap justify-between gap-2 pt-4">
               <Button
                 variant="outline"
                 size="sm"
+                className="md:min-w-1/4 text-xs md:text-sm"
                 onClick={() => handleAction("request-documents", borrower.id)}
                 disabled={isLoading["request-documents"]}
               >
@@ -128,6 +129,7 @@ export function AIExplainability({ borrower, onToast }: AIExplainabilityProps) {
               <Button
                 variant="outline"
                 size="sm"
+                className="md:min-w-1/4 text-xs md:text-sm"
                 onClick={() => handleAction("send-valuer", borrower.id)}
                 disabled={isLoading["send-valuer"]}
               >
@@ -136,6 +138,7 @@ export function AIExplainability({ borrower, onToast }: AIExplainabilityProps) {
 
               <Button
                 size="sm"
+                className="md:min-w-1/4 text-xs md:text-sm"
                 onClick={() => handleAction("approve", borrower.id)}
                 disabled={isLoading["approve"] || !canApprove}
                 title={
