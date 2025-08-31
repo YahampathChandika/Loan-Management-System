@@ -14,7 +14,7 @@ export function BorrowerDetail() {
     return (
       <Card className="h-fit">
         <CardContent className="flex items-center justify-center py-12">
-          <Loader2 className="h-6 w-6 animate-spin" />
+          <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
         </CardContent>
       </Card>
     );
@@ -24,7 +24,9 @@ export function BorrowerDetail() {
     return (
       <Card className="h-fit">
         <CardContent className="flex items-center justify-center py-12">
-          <p className="text-gray-500">Select a borrower to view details</p>
+          <p className="text-muted-foreground">
+            Select a borrower to view details
+          </p>
         </CardContent>
       </Card>
     );
@@ -38,12 +40,16 @@ export function BorrowerDetail() {
             <div>
               <CardTitle className="text-xl">{activeBorrower.name}</CardTitle>
               <div className="space-y-1 mt-2">
-                <p className="text-sm text-gray-600">{activeBorrower.email}</p>
-                <p className="text-sm text-gray-600">{activeBorrower.phone}</p>
+                <p className="text-sm text-muted-foreground">
+                  {activeBorrower.email}
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  {activeBorrower.phone}
+                </p>
               </div>
             </div>
             <div className="text-right">
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-2xl font-bold">
                 {formatCurrency(activeBorrower.loan_amount)}
               </p>
               <Badge
@@ -63,7 +69,7 @@ export function BorrowerDetail() {
         <Separator />
 
         <div>
-          <h3 className="font-semibold text-gray-900 mb-4">Loan Summary</h3>
+          <h3 className="font-semibold mb-4">Loan Summary</h3>
           <LoanSummary borrower={activeBorrower} />
         </div>
       </CardContent>

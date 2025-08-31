@@ -11,7 +11,7 @@ export function OnboardingWorkflow({
 }: OnboardingWorkflowProps) {
   return (
     <div className="space-y-1">
-      <h4 className="font-semibold text-gray-900 mb-4">Onboarding Workflow</h4>
+      <h4 className="font-semibold mb-4">Onboarding Workflow</h4>
 
       <div className="space-y-3">
         {steps.map((step, index) => {
@@ -22,22 +22,22 @@ export function OnboardingWorkflow({
           return (
             <div key={index} className="flex items-center space-x-3">
               <div
-                className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium ${
+                className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium transition-colors ${
                   isCompleted
-                    ? "bg-green-500 text-white"
+                    ? "bg-emerald-500 text-white dark:bg-emerald-600"
                     : isCurrent
-                    ? "bg-blue-500 text-white"
-                    : "bg-gray-200 text-gray-600"
+                    ? "bg-blue-500 text-white dark:bg-blue-600"
+                    : "bg-muted text-muted-foreground"
                 }`}
               >
                 {isCompleted ? <Check className="w-3 h-3" /> : stepNumber}
               </div>
 
               <span
-                className={`text-sm ${
+                className={`text-sm transition-colors ${
                   isCompleted || isCurrent
-                    ? "text-gray-900 font-medium"
-                    : "text-gray-500"
+                    ? "text-foreground font-medium"
+                    : "text-muted-foreground"
                 }`}
               >
                 {step}

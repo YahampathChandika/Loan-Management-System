@@ -40,11 +40,11 @@ export function BrokerOverview() {
           <BrokerStats broker={brokerInfo} />
         </div>
 
-        <div className="space-y-2">
+        <div className="space-x-2 flex justify-between items-center">
           <Button
             variant="outline"
             size="sm"
-            className="w-full justify-start"
+            className="w-1/3 "
             onClick={() => handleContactAction("Call")}
           >
             <Phone className="w-4 h-4 mr-2" />
@@ -54,7 +54,7 @@ export function BrokerOverview() {
           <Button
             variant="outline"
             size="sm"
-            className="w-full justify-start"
+            className="w-1/3 "
             onClick={() => handleContactAction("Email")}
           >
             <Mail className="w-4 h-4 mr-2" />
@@ -64,7 +64,7 @@ export function BrokerOverview() {
           <Button
             variant="outline"
             size="sm"
-            className="w-full justify-start"
+            className="w-1/3 "
             onClick={() => handleContactAction("Chat")}
           >
             <MessageCircle className="w-4 h-4 mr-2" />
