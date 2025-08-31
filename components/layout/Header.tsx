@@ -78,7 +78,7 @@ export function Header() {
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
                 placeholder="Search borrowers..."
-                className="pl-10 w-full"
+                className="pl-10 w-full placeholder:text-sm"
                 value={searchTerm}
                 onChange={(e) => handleSearch(e.target.value)}
                 autoFocus

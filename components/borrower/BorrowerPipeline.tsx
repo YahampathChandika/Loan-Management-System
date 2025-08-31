@@ -112,11 +112,13 @@ export function BorrowerPipeline() {
           className="space-y-4"
         >
           <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="new">New ({getTabCount("new")})</TabsTrigger>
-            <TabsTrigger value="in_review">
+            <TabsTrigger value="new" className="text-xs md:text-sm">
+              New ({getTabCount("new")})
+            </TabsTrigger>
+            <TabsTrigger value="in_review" className="text-xs md:text-sm">
               In Review ({getTabCount("in_review")})
             </TabsTrigger>
-            <TabsTrigger value="approved">
+            <TabsTrigger value="approved" className="text-xs md:text-sm">
               Approved ({getTabCount("approved")})
             </TabsTrigger>
           </TabsList>
