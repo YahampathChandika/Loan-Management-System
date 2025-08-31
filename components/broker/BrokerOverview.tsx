@@ -166,46 +166,11 @@ export function BrokerOverview() {
           </div>
 
           {/* Desktop Contact Buttons - Segmented Control Style */}
-          <div className="hidden md:block">
-            <div className="flex rounded-lg border overflow-hidden">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="flex-1 rounded-none border-r hover:bg-accent"
-                onClick={() => handleContactAction("call")}
-              >
-                <Phone className="w-4 h-4 mr-2" />
-                Call
-              </Button>
-
-              <Button
-                variant="ghost"
-                size="sm"
-                className="flex-1 rounded-none border-r hover:bg-accent"
-                onClick={() => handleContactAction("email")}
-              >
-                <Mail className="w-4 h-4 mr-2" />
-                Email
-              </Button>
-
-              <Button
-                variant="ghost"
-                size="sm"
-                className="flex-1 rounded-none hover:bg-accent"
-                onClick={() => handleContactAction("chat")}
-              >
-                <MessageCircle className="w-4 h-4 mr-2" />
-                Chat
-              </Button>
-            </div>
-          </div>
-
-          {/* Mobile Contact Buttons - Individual */}
-          <div className="md:hidden space-y-2">
+          <div className="flex rounded-lg border overflow-hidden">
             <Button
-              variant="outline"
+              variant="ghost"
               size="sm"
-              className="w-full"
+              className="flex-1 rounded-none border-r hover:bg-accent"
               onClick={() => handleContactAction("call")}
             >
               <Phone className="w-4 h-4 mr-2" />
@@ -213,9 +178,9 @@ export function BrokerOverview() {
             </Button>
 
             <Button
-              variant="outline"
+              variant="ghost"
               size="sm"
-              className="w-full"
+              className="flex-1 rounded-none border-r hover:bg-accent"
               onClick={() => handleContactAction("email")}
             >
               <Mail className="w-4 h-4 mr-2" />
@@ -223,9 +188,9 @@ export function BrokerOverview() {
             </Button>
 
             <Button
-              variant="outline"
+              variant="ghost"
               size="sm"
-              className="w-full"
+              className="flex-1 rounded-none hover:bg-accent"
               onClick={() => handleContactAction("chat")}
             >
               <MessageCircle className="w-4 h-4 mr-2" />

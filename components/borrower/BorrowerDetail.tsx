@@ -67,7 +67,7 @@ export function BorrowerDetail({ onToast }: BorrowerDetailProps) {
               </div>
             </div>
             <div className="text-right">
-              <p className="text-2xl font-bold">
+              <p className="text-xl md:text-2xl font-bold">
                 {formatCurrency(activeBorrower.loan_amount)}
               </p>
               <Badge
